@@ -10,11 +10,21 @@ const users = [];
 const tweets = [];
 
 app.post('/sign-up', (req, res) => {
-    users.push({...req.body});
-    res.status(201).send('OK');
+    const body = req.body;
+    if (body.username === '' || body.avatar === '') {
+        res.status(400).send('Todos os campos são obrigatórios!');
+    } else {
+        users.push({ ...req.body });
+        res.status(201).send('OK');
+    }
+
 });
 
 app.post('/tweets', (req, res) => {
+    const body = req.body;
+    if (body.username === '' || body.tweet === '') {
+        res.status(400).send('Todos os campos são obrigatórios!');
+    }
     let usr = req.body.username
     let loged = users.find(e => e.username === usr)
     tweets.push({
